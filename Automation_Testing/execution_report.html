@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tichi Automation — Execution Report (Sample)</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#161922;
+    --panel-border:#262b38;
+    --text:#e7e9ee;
+    --muted:#8b93a7;
+    --pass:#3ecf8e;
+    --fail:#f2555a;
+    --pass-bg:rgba(62,207,142,0.12);
+    --fail-bg:rgba(242,85,90,0.12);
+    --accent:#5b8cff;
+    --mono:'JetBrains Mono','SFMono-Regular',Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    padding:32px;
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(242,85,90,0.15), rgba(242,85,90,0.03));
+    border:1px solid rgba(242,85,90,0.4);
+    color:#ffb3b5;
+    padding:14px 18px;
+    border-radius:10px;
+    font-size:13.5px;
+    margin-bottom:28px;
+    max-width:1100px;
+  }
+  .banner b{color:#ffd7d8;}
+  .wrap{max-width:1100px; margin:0 auto;}
+  header{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px; flex-wrap:wrap; gap:12px;}
+  h1{font-size:22px; margin:0 0 6px 0; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:13px; font-family:var(--mono);}
+  .meta{text-align:right; font-size:12.5px; color:var(--muted); line-height:1.6;}
+  .cards{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:30px;}
+  .card{background:var(--panel); border:1px solid var(--panel-border); border-radius:12px; padding:16px 18px;}
+  .card .num{font-size:26px; font-weight:700; font-family:var(--mono);}
+  .card .label{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+  .card.pass .num{color:var(--pass);}
+  .card.fail .num{color:var(--fail);}
+  .card.rate .num{color:var(--accent);}
+  .barwrap{background:var(--panel); border:1px solid var(--panel-border); border-radius:12px; padding:18px 20px; margin-bottom:30px;}
+  .bar{height:10px; border-radius:6px; overflow:hidden; display:flex; background:#22262f;}
+  .bar .p{background:var(--pass);}
+  .bar .f{background:var(--fail);}
+  .barlabels{display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--muted);}
+  section{margin-bottom:34px;}
+  .section-title{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+  .section-title h2{font-size:15px; margin:0; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600;}
+  .section-title .count{font-family:var(--mono); font-size:12px; color:var(--muted);}
+  table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--panel-border); border-radius:12px; overflow:hidden;}
+  th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); padding:12px 16px; border-bottom:1px solid var(--panel-border); font-weight:600;}
+  td{padding:12px 16px; font-size:13px; border-bottom:1px solid var(--panel-border); vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr.row:hover{background:rgba(255,255,255,0.02);}
+  .status{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; font-family:var(--mono);}
+  .status.PASS{color:var(--pass); background:var(--pass-bg);}
+  .status.FAIL{color:var(--fail); background:var(--fail-bg);}
+  .dot{width:6px; height:6px; border-radius:50%; background:currentColor;}
+  .tc{font-family:var(--mono); font-size:12px; color:var(--accent);}
+  .step{color:var(--muted); font-size:12px; margin-top:2px;}
+  .reason{color:#ffb3b5; font-size:12px; font-family:var(--mono); margin-top:4px;}
+  .dur{font-family:var(--mono); color:var(--muted); font-size:12px;}
+  footer{color:var(--muted); font-size:12px; text-align:center; margin-top:20px;}
+  footer a{color:var(--accent); text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="banner">
+    <b>Sample / preview report</b> — generated to show the exact layout and content you'll get from Allure once you run this suite locally against the live Tichi app. This is not a real execution: I don't have browser/network access in this sandbox to launch Chrome against https://tichi-app-webapp-stage.web.app. Statuses below are illustrative placeholders. See the note at the bottom for how to produce the real report.
+  </div>
+
+  <header>
+    <div>
+      <h1>Tichi Web App — Sign In / Sign Up Suite</h1>
+      <div class="sub">tichi-app-webapp-stage.web.app · pytest + selenium + allure</div>
+    </div>
+    <div class="meta">
+      Run date: 2026-07-06 · Duration: 42.8s<br>
+      Environment: Chrome 126 · staging<br>
+      Executed by: sample-preview
+    </div>
+  </header>
+
+  <div class="cards">
+    <div class="card"><div class="num">9</div><div class="label">Total tests</div></div>
+    <div class="card pass"><div class="num">6</div><div class="label">Passed</div></div>
+    <div class="card fail"><div class="num">3</div><div class="label">Failed</div></div>
+    <div class="card rate"><div class="num">67%</div><div class="label">Pass rate</div></div>
+    <div class="card"><div class="num">4.8s</div><div class="label">Avg duration</div></div>
+  </div>
+
+  <div class="barwrap">
+    <div class="bar">
+      <div class="p" style="width:67%"></div>
+      <div class="f" style="width:33%"></div>
+    </div>
+    <div class="barlabels"><span>6 passed</span><span>3 failed</span></div>
+  </div>
+
+  <section>
+    <div class="section-title"><h2>Sign In — test_signin.py</h2><span class="count">5 tests</span></div>
+    <table>
+      <tr><th style="width:120px">Test ID</th><th>Scenario</th><th style="width:90px">Status</th><th style="width:70px">Duration</th></tr>
+
+      <tr class="row">
+        <td class="tc">TC_LOGIN_01</td>
+        <td>
+          Valid login — spranavsivaraj@gmail.com / Pranav@19
+          <div class="step">Steps: open app → enter email → enter password → click Sign in → verify dashboard visible</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">6.1s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_LOGIN_02</td>
+        <td>
+          Invalid password for a valid email
+          <div class="step">Steps: open app → enter email → enter wrong password → click Sign in → verify error shown</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">4.3s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_LOGIN_03</td>
+        <td>
+          Login with unregistered email
+          <div class="step">Steps: open app → enter unregistered email → enter password → click Sign in → verify error shown</div>
+          <div class="reason">AssertionError: Expected an error message to be shown for invalid login data.</div>
+        </td>
+        <td><span class="status FAIL"><span class="dot"></span>FAIL</span></td>
+        <td class="dur">5.9s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_LOGIN_04</td>
+        <td>
+          Empty email field
+          <div class="step">Steps: open app → leave email blank → enter password → click Sign in → verify error shown</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">3.6s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_LOGIN_05</td>
+        <td>
+          Empty password field
+          <div class="step">Steps: open app → enter email → leave password blank → click Sign in → verify error shown</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">3.4s</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Sign Up — test_signup.py</h2><span class="count">4 tests</span></div>
+    <table>
+      <tr><th style="width:120px">Test ID</th><th>Scenario</th><th style="width:90px">Status</th><th style="width:70px">Duration</th></tr>
+
+      <tr class="row">
+        <td class="tc">TC_SIGNUP_01</td>
+        <td>
+          Valid signup with new unique email
+          <div class="step">Steps: open signup page → fill name/email/password/confirm → click Sign up → verify success indicator</div>
+          <div class="reason">AssertionError: success indicator element not found — locator likely needs updating for the real DOM.</div>
+        </td>
+        <td><span class="status FAIL"><span class="dot"></span>FAIL</span></td>
+        <td class="dur">7.2s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_SIGNUP_02</td>
+        <td>
+          Signup with an already-registered email
+          <div class="step">Steps: open signup page → fill form with existing email → click Sign up → verify error shown</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">5.5s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_SIGNUP_03</td>
+        <td>
+          Signup with malformed email format
+          <div class="step">Steps: open signup page → enter "bademail-format" → click Sign up → verify error shown</div>
+        </td>
+        <td><span class="status PASS"><span class="dot"></span>PASS</span></td>
+        <td class="dur">4.1s</td>
+      </tr>
+
+      <tr class="row">
+        <td class="tc">TC_SIGNUP_04</td>
+        <td>
+          Password and confirm-password mismatch
+          <div class="step">Steps: open signup page → fill form with mismatched confirm password → click Sign up → verify error shown</div>
+          <div class="reason">AssertionError: expected mismatch error was not detected within timeout.</div>
+        </td>
+        <td><span class="status FAIL"><span class="dot"></span>FAIL</span></td>
+        <td class="dur">6.8s</td>
+      </tr>
+    </table>
+  </section>
+
+  <footer>
+    Generated as a layout preview only. Run <span style="font-family:var(--mono)">pytest</span> then
+    <span style="font-family:var(--mono)">allure generate reports/allure-results -o reports/allure-report --clean &amp;&amp; allure open reports/allure-report</span>
+    for the real, live report.
+  </footer>
+
+</div>
+</body>
+</html>
