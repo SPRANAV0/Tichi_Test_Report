@@ -1,4 +1,5 @@
 import pytest
+import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -14,7 +15,15 @@ def driver():
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
 
-    service = ChromeService(ChromeDriverManager().install())
+    chromedriver_path = shutil.which("chromedriver")
+    if chromedriver_path:
+        service = ChromeService(executable_path=chromedriver_path)
+    else:
+        try:
+            service = ChromeService(ChromeDriverManager().install())
+        except Exception as exc:
+            pytest.skip(f"ChromeDriver is unavailable in this environment: {exc}")
+
     drv = webdriver.Chrome(service=service, options=options)
     drv.set_page_load_timeout(config.PAGE_LOAD_TIMEOUT)
 
