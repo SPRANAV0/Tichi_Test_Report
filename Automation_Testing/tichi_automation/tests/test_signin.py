@@ -39,7 +39,6 @@ def test_login(driver, data):
     with allure.step(f"Enter email: {email or '(empty)'}"):
         login_page.enter_email(email)
 
-    # Empty email: Continue button should stay disabled. Nothing further to do.
     if not email:
         with allure.step("Verify Continue is blocked for empty email"):
             assert expected_result != "success"
