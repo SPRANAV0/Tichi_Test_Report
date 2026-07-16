@@ -1,4 +1,5 @@
 import pytest
+import os
 import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -10,8 +11,11 @@ from config import config
 @pytest.fixture
 def driver():
     options = webdriver.ChromeOptions()
-    if config.HEADLESS:
+    run_headless = config.HEADLESS or not os.environ.get("DISPLAY")
+    if run_headless:
         options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
 
