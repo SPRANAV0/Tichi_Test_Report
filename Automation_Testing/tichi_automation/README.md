@@ -55,7 +55,28 @@ The valid login credentials you gave me are already in row `TC_LOGIN_01`:
 
 Add/edit rows directly in Excel — the tests will pick up any row you add automatically.
 
-## 3. IMPORTANT — verify locators before running
+## 3. Fixed in this version
+
+The following bugs from the initial draft have been corrected so the suite
+runs cleanly end-to-end (no `AttributeError`/`TypeError`):
+
+- `tests/test_signin.py` called a non-existent `login_page.submit_login()` —
+  now calls the actual `click_signin()` method.
+- `tests/test_signup.py` called `signup_page.load()` with no URL, but
+  `SignupPage.load()` required one — `config.SIGNUP_URL` was added and
+  `load()` now defaults to it.
+- `tests/test_signup.py` called `signup_page.signup(name, email, password)`
+  with 3 args while the method requires 4 (`confirm_password`) — now passes
+  `confirm_password` from the Excel row.
+- Added null-guards around `expected_result.lower()` and other Excel cells
+  so a blank cell won't raise `AttributeError: 'NoneType' object has no
+  attribute 'lower'`.
+- Replaced bare `except:` clauses with `except Exception:`.
+- Removed the bundled Windows `venv/` and stale `__pycache__` /
+  `allure-results` / `reports` folders from the zip — create your own venv
+  per step 1 instead of reusing the shipped one.
+
+## 4. IMPORTANT — verify locators before running
 
 I could not inspect the live rendered DOM of the app from this environment
 (it's a client-rendered SPA, so a plain HTTP fetch only returns an empty shell).
@@ -73,7 +94,7 @@ Before running the suite:
    `tests/test_signup.py` — change `SIGNUP_URL` if it's different, e.g. a
    modal on the same page instead of a separate route).
 
-## 4. Run the tests
+## 5. Run the tests
 
 ```bash
 pytest
@@ -95,7 +116,7 @@ Run a single Excel-driven case by its test id:
 pytest tests/test_signin.py -k TC_LOGIN_01
 ```
 
-## 5. Generate & view the Allure report
+## 6. Generate & view the Allure report
 
 ```bash
 allure generate reports/allure-results -o reports/allure-report --clean

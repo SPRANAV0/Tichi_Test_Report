@@ -1,27 +1,54 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from config import config
 
 
 class SignupPage(BasePage):
 
-    NAME_INPUT = (By.CSS_SELECTOR, "input[name='name'], input[placeholder*='name' i]")
-    EMAIL_INPUT = (By.CSS_SELECTOR, "input[type='email'], input[name='email'], input[placeholder*='mail' i]")
-    PASSWORD_INPUT = (By.CSS_SELECTOR, "input[type='password'][name='password'], input[name='password']")
-    CONFIRM_PASSWORD_INPUT = (By.CSS_SELECTOR, "input[name='confirmPassword'], input[placeholder*='confirm' i]")
-    SIGNUP_BUTTON = (By.XPATH, "//button[contains(translate(., 'SIGNUP', 'signup'), 'sign up') or contains(translate(., 'SIGNUP', 'signup'), 'register') or contains(translate(., 'SIGNUP', 'signup'), 'create account')]")
-    ERROR_MESSAGE = (By.CSS_SELECTOR, "[class*='error'], [role='alert']")
-    SUCCESS_INDICATOR = (By.CSS_SELECTOR, "[class*='dashboard'], [class*='home'], [class*='verify']")
+    FIRST_NAME_INPUT = (By.CSS_SELECTOR,"input#firstName"
+)
 
-    def load(self, base_url_with_signup_path):
-        self.open(base_url_with_signup_path)
+    LAST_NAME_INPUT = (By.CSS_SELECTOR,"input#lastName"
+)
 
-    def signup(self, name, email, password, confirm_password):
-        if name:
-            self.type_text(self.NAME_INPUT, name)
+    EMAIL_INPUT = (By.CSS_SELECTOR,"input[type='email']"
+)
+
+    PHONE_INPUT = (By.CSS_SELECTOR,"input#phoneNumber"
+)
+
+    PASSWORD_INPUT = ( By.CSS_SELECTOR,"input#password"
+)
+
+    CONFIRM_PASSWORD_INPUT = ( By.CSS_SELECTOR,"input#confirmPassword"
+)
+
+    SIGNUP_BUTTON = (By.XPATH,"//button[normalize-space()='Sign Up']"
+)
+
+    ERROR_MESSAGE = ( By.CSS_SELECTOR,"div.text-red-500"
+)
+
+    SUCCESS_INDICATOR = (By.XPATH,"//p[normalize-space()='Home']"
+)
+
+    TERMS_CHECKBOX = (By.CSS_SELECTOR, "button[role='checkbox']#remember")
+
+    def load(self, base_url_with_signup_path=None):
+        self.open(base_url_with_signup_path or config.SIGNUP_URL)
+
+    def signup(self, first_name, last_name, email, password, confirm_password, phone=""):
+        if first_name:
+            self.type_text(self.FIRST_NAME_INPUT, first_name)
+        if last_name:
+            self.type_text(self.LAST_NAME_INPUT, last_name)
+        if phone:
+            self.type_text(self.PHONE_INPUT, phone)
         self.type_text(self.EMAIL_INPUT, email)
         self.type_text(self.PASSWORD_INPUT, password)
         if confirm_password:
             self.type_text(self.CONFIRM_PASSWORD_INPUT, confirm_password)
+        self.click(self.TERMS_CHECKBOX)
         self.click(self.SIGNUP_BUTTON)
 
     def get_error_message(self):

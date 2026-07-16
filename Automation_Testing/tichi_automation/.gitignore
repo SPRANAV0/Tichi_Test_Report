@@ -1,0 +1,15 @@
+# Python virtual environment
+Automation_Testing/tichi_automation/venv/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Reports
+reports/
+
+# VS Code
+.vscode/
