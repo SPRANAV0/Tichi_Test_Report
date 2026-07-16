@@ -1,4 +1,6 @@
 import pytest
+import os
+import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,12 +11,23 @@ from config import config
 @pytest.fixture
 def driver():
     options = webdriver.ChromeOptions()
-    if config.HEADLESS:
+    run_headless = config.HEADLESS or not os.environ.get("DISPLAY")
+    if run_headless:
         options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
 
-    service = ChromeService(ChromeDriverManager().install())
+    chromedriver_path = shutil.which("chromedriver")
+    if chromedriver_path:
+        service = ChromeService(executable_path=chromedriver_path)
+    else:
+        try:
+            service = ChromeService(ChromeDriverManager().install())
+        except Exception as exc:
+            pytest.skip(f"ChromeDriver is unavailable in this environment: {exc}")
+
     drv = webdriver.Chrome(service=service, options=options)
     drv.set_page_load_timeout(config.PAGE_LOAD_TIMEOUT)
 
